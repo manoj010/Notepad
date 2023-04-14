@@ -3,6 +3,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.print.PrinterException;
 import java.io.*;
 import java.util.logging.Level;
@@ -55,9 +56,10 @@ public class Notepad extends JFrame implements ActionListener {
         JScrollPane scrollPane = new JScrollPane(textArea);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setBorder(BorderFactory.createEmptyBorder());
         add(scrollPane);
 
-        textArea.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 20));
+        textArea.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 16));
         textArea.setLineWrap(true);
         textArea.setWrapStyleWord(true);
 
@@ -71,6 +73,16 @@ public class Notepad extends JFrame implements ActionListener {
         paste.addActionListener(this);
         select_all.addActionListener(this);
         about.addActionListener(this);
+
+        newFile.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, KeyEvent.CTRL_DOWN_MASK));
+        openFile.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, KeyEvent.CTRL_DOWN_MASK));
+        saveFile.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, KeyEvent.CTRL_DOWN_MASK));
+        print.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, KeyEvent.CTRL_DOWN_MASK));
+        exit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_W, KeyEvent.CTRL_DOWN_MASK));
+        copy.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, KeyEvent.CTRL_DOWN_MASK));
+        cut.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, KeyEvent.CTRL_DOWN_MASK));
+        select_all.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, KeyEvent.CTRL_DOWN_MASK));
+        about.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_J, KeyEvent.CTRL_DOWN_MASK));
     }
 
     @Override
@@ -139,13 +151,23 @@ public class Notepad extends JFrame implements ActionListener {
 
         } else if(e.getActionCommand().equalsIgnoreCase("Cut")) {
 
+            textArea.cut();
+
         } else if(e.getActionCommand().equalsIgnoreCase("Copy")) {
+
+            textArea.copy();
 
         } else if(e.getActionCommand().equalsIgnoreCase("Paste")) {
 
+            textArea.paste();
+
         } else if(e.getActionCommand().equalsIgnoreCase("Select All")) {
 
+            textArea.selectAll();
+
         } else if(e.getActionCommand().equalsIgnoreCase("About")) {
+
+            new About().setVisible(true);
 
         }
     }

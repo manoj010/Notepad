@@ -3,7 +3,7 @@ import java.awt.*;
 
 public class About extends JFrame {
     About() {
-        setBounds(100, 100, 500, 400);
+        setBounds(150, 100, 500, 400);
         setTitle("About");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         ImageIcon icon = new ImageIcon(getClass().getResource("notepad_icon.png"));
