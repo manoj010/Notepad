@@ -1,5 +1,12 @@
 import javax.swing.*;
-public class Notepad extends JFrame {
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
+import java.io.IOException;
+
+public class Notepad extends JFrame implements ActionListener {
     JMenuBar menuBar = new JMenuBar();
     JMenu file = new JMenu("File");
     JMenu edit = new JMenu("Edit");
@@ -16,12 +23,12 @@ public class Notepad extends JFrame {
     JMenuItem paste = new JMenuItem("Paste");
     JMenuItem select_all = new JMenuItem("Select All");
     JMenuItem about = new JMenuItem("About");
-
+    JTextArea textArea = new JTextArea();
     Notepad() {
         setTitle("Notepad");
         setBounds(100, 70, 700, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ImageIcon icon = new ImageIcon(getClass().getResource("notepadicon.png"));
+        ImageIcon icon = new ImageIcon(getClass().getResource("notepad_icon.png"));
         setIconImage(icon.getImage());
 
         setJMenuBar(menuBar);
@@ -43,5 +50,70 @@ public class Notepad extends JFrame {
 
         help.add(about);
 
+        JScrollPane scrollPane = new JScrollPane(textArea);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        add(scrollPane);
+
+        textArea.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 20));
+        textArea.setLineWrap(true);
+        textArea.setWrapStyleWord(true);
+
+        newFile.addActionListener(this);
+        openFile.addActionListener(this);
+        saveFile.addActionListener(this);
+        print.addActionListener(this);
+        exit.addActionListener(this);
+        copy.addActionListener(this);
+        cut.addActionListener(this);
+        paste.addActionListener(this);
+        select_all.addActionListener(this);
+        about.addActionListener(this);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getActionCommand().equalsIgnoreCase("New")) {
+            textArea.setText(null);
+        } else if(e.getActionCommand().equalsIgnoreCase("Open")) {
+
+        } else if(e.getActionCommand().equalsIgnoreCase("Save")) {
+
+            JFileChooser fileChooser = new JFileChooser();
+            FileNameExtensionFilter textFilter = new FileNameExtensionFilter("Text files(.txt)", "txt");
+            fileChooser.setAcceptAllFileFilterUsed(false);
+            fileChooser.addChoosableFileFilter(textFilter);
+
+            int action = fileChooser.showSaveDialog(null);
+
+            if(action != JFileChooser.APPROVE_OPTION) {
+                return;
+            } else {
+                String fileName = fileChooser.getSelectedFile().getAbsolutePath().toString();
+                if (!fileName.contains(".txt")) {
+                    fileName = fileName + ".txt";
+                }
+                try {
+                    BufferedWriter bufferedWriter =
+                } catch (IOException) {
+                    throw 
+                }
+            }
+
+        } else if(e.getActionCommand().equalsIgnoreCase("Print")) {
+
+        } else if(e.getActionCommand().equalsIgnoreCase("Exit")) {
+
+        } else if(e.getActionCommand().equalsIgnoreCase("Cut")) {
+
+        } else if(e.getActionCommand().equalsIgnoreCase("Copy")) {
+
+        } else if(e.getActionCommand().equalsIgnoreCase("Paste")) {
+
+        } else if(e.getActionCommand().equalsIgnoreCase("Select All")) {
+
+        } else if(e.getActionCommand().equalsIgnoreCase("About")) {
+
+        }
     }
 }
