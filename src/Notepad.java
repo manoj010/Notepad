@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 
 public class Notepad extends JFrame implements ActionListener {
@@ -94,9 +95,10 @@ public class Notepad extends JFrame implements ActionListener {
                     fileName = fileName + ".txt";
                 }
                 try {
-                    BufferedWriter bufferedWriter =
-                } catch (IOException) {
-                    throw 
+                    BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(fileName));
+                    textArea.write(bufferedWriter);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
                 }
             }
 
