@@ -3,9 +3,10 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.awt.print.PrinterException;
+import java.io.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Notepad extends JFrame implements ActionListener {
     JMenuBar menuBar = new JMenuBar();
@@ -78,6 +79,28 @@ public class Notepad extends JFrame implements ActionListener {
             textArea.setText(null);
         } else if(e.getActionCommand().equalsIgnoreCase("Open")) {
 
+            JFileChooser fileChooser = new JFileChooser();
+            FileNameExtensionFilter textFilter = new FileNameExtensionFilter("Text files(.txt)", "txt");
+            fileChooser.setAcceptAllFileFilterUsed(false);
+            fileChooser.addChoosableFileFilter(textFilter);
+
+            int action = fileChooser.showSaveDialog(null);
+
+            if(action != JFileChooser.APPROVE_OPTION) {
+                return;
+            } else {
+                String fileName = fileChooser.getSelectedFile().getAbsolutePath().toString();
+                if (!fileName.contains(".txt")) {
+                    fileName = fileName + ".txt";
+                }
+                try {
+                    BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
+                    textArea.read(bufferedReader, null);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }
+
         } else if(e.getActionCommand().equalsIgnoreCase("Save")) {
 
             JFileChooser fileChooser = new JFileChooser();
@@ -104,7 +127,15 @@ public class Notepad extends JFrame implements ActionListener {
 
         } else if(e.getActionCommand().equalsIgnoreCase("Print")) {
 
+            try {
+                textArea.print();
+            } catch (PrinterException ex) {
+                Logger.getLogger(Notepad.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
         } else if(e.getActionCommand().equalsIgnoreCase("Exit")) {
+
+            System.exit(0);
 
         } else if(e.getActionCommand().equalsIgnoreCase("Cut")) {
 
